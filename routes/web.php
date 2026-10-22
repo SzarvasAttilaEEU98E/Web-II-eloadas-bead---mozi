@@ -1,38 +1,35 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdatbazisController;
 use App\Http\Controllers\KapcsolatController;
 use App\Http\Controllers\UzenetController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    return view('fooldal');
+})->name('fooldal');
 
 Route::get('/adatbazis', [AdatbazisController::class, 'adatbazisLekero'])
     ->name('adatbazis');
 
-   Route::get('/kapcsolat', function () {
+Route::get('/kapcsolat', function () {
     return view('kapcsolat');
-})->name('kapcsolat'); 
+})->name('kapcsolat');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::post('/kapcsolat', [KapcsolatController::class, 'uzenetKuldes'])
+    ->name('uzenet.kuldes');
+
+Route::get('/uzenetek', [UzenetController::class, 'uzenetekLekero'])
+    ->name('uzenetek');
+//TEST
+/*
+    Route::get('/session-test', function () {
+    session(['teszt' => 'mukodik']);
+
+    return response()->json([
+        'session_id' => session()->getId(),
+        'teszt' => session('teszt'),
+    ]);
 });
-
-
-require __DIR__.'/auth.php';
+*/
