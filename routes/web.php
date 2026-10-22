@@ -15,6 +15,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/adatbazis', [AdatbazisController::class, 'adatbazisLekero'])
+    ->name('adatbazis');
+
+   Route::get('/kapcsolat', function () {
+    return view('kapcsolat');
+})->name('kapcsolat'); 
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -25,7 +32,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/adatbazis', [AdatbazisController::class, 'adatbazisLekero'])
-    ->name('adatbazis');
 
 require __DIR__.'/auth.php';
