@@ -22,6 +22,7 @@ Route::post('/kapcsolat', [KapcsolatController::class, 'uzenetKuldes'])
 
 Route::get('/uzenetek', [UzenetController::class, 'uzenetekLekero'])
     ->name('uzenetek');
+
 //TEST
 /*
     Route::get('/session-test', function () {
@@ -33,3 +34,5 @@ Route::get('/uzenetek', [UzenetController::class, 'uzenetekLekero'])
     ]);
 });
 */
+
+require __DIR__.'/auth.php';
