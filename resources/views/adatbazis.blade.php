@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="hu">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Adatbázis</title>
-</head>
+@section('title', 'Adatbázis')
 
-<body>
+@section('content')
 
     <h1>Filmek</h1>
 
@@ -79,7 +75,7 @@
             @endforeach
         </tbody>
     </table>
-        {{ $eloadasok->links() }}
-</body>
 
-</html>
+    {{ $eloadasok->links() }}
+
+@endsection
