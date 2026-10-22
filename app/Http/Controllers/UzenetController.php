@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UzenetRequest;
 use App\Models\Uzenet;
 
-class KapcsolatController extends Controller
+class UzenetController extends Controller
 {
-    public function uzenetKuldes(UzenetRequest $request)
+    public function uzenetekLekero()
     {
-        Uzenet::create($request->validated());
+        $uzenetek = Uzenet::orderBy('created_at', 'desc')->paginate(10);
 
-        return redirect()
-            ->route('kapcsolat')
-            ->with('success', 'Üzenet sikeresen elküldve!');
+        return view('uzenetek', compact('uzenetek'));
     }
 }
