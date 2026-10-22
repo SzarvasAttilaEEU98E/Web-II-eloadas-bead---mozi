@@ -35,5 +35,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('admin');
 });
 
-
-require __DIR__.'/auth.php'
+require __DIR__.'/auth.php';
