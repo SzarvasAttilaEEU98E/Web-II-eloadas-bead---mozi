@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use App\Http\Controllers\AdatbazisController;
 use App\Http\Controllers\KapcsolatController;
 use App\Http\Controllers\UzenetController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('fooldal');
@@ -16,23 +18,22 @@ Route::get('/kapcsolat', function () {
     return view('kapcsolat');
 })->name('kapcsolat');
 
-
 Route::post('/kapcsolat', [KapcsolatController::class, 'uzenetKuldes'])
     ->name('uzenet.kuldes');
 
-Route::get('/uzenetek', [UzenetController::class, 'uzenetekLekero'])
-    ->name('uzenetek');
 
-//TEST
-/*
-    Route::get('/session-test', function () {
-    session(['teszt' => 'mukodik']);
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    return response()->json([
-        'session_id' => session()->getId(),
-        'teszt' => session('teszt'),
-    ]);
+    Route::get('/dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
+
+    Route::get('/uzenetek', [UzenetController::class, 'uzenetekLekero'])
+        ->name('uzenetek');
+
+    Route::get('/admin', [AdminController::class, 'adminPage'])
+        ->name('admin');
 });
-*/
 
-require __DIR__.'/auth.php';
+
+require __DIR__.'/auth.php'
