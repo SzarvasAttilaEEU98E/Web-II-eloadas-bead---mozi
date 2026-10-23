@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Film;
+use App\Http\Requests\FilmRequest;
 
 class FilmController extends Controller
 {
@@ -22,15 +23,18 @@ class FilmController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.filmek.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FilmRequest  $request)
     {
-        //
+        Film::create($request->validated());
+
+        return redirect()->route('admin.filmek.getAll')
+            ->with('success', 'Film sikeresen hozzáadva!');
     }
 
     /**
@@ -46,15 +50,21 @@ class FilmController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $film = Film::findOrFail($id);
+
+        return view('admin.filmek.edit', compact('film'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FilmRequest  $request, string $id)
     {
-        //
+        $film = Film::findOrFail($id);
+
+        $film->update($request->validated());
+
+        return redirect()->route('admin.filmek.getAll');
     }
 
     /**
@@ -62,6 +72,10 @@ class FilmController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $film = Film::findOrFailű($id);
+
+        $film->delete();
+
+        return redirect()->route('admin.filmek.getAll');
     }
 }

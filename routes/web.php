@@ -37,6 +37,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::get('/admin/filmek', [FilmController::class, 'getAll'])
         ->name('admin.filmek.getAll');
+
+    Route::get('/admin/filmek/create', [FilmController::class, 'create'])
+        ->name('admin.filmek.create');
+
+    Route::post('/admin/filmek', [FilmController::class, 'store'])
+        ->name('admin.filmek.store');
+    
+    Route::get('/admin/filmek/{id}/edit', [FilmController::class, 'edit'])
+        ->name('admin.filmek.edit');
+
+    Route::put('/admin/filmek/{id}', [FilmController::class, 'update'])
+        ->name('admin.filmek.update');
+
+    Route::delete('/admin/filmek/{id}', [FilmController::class, 'destroy'])
+        ->name('admin.filmek.destroy');
 });
 
 
