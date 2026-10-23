@@ -3,7 +3,10 @@
 @section('title', 'Admin')
 
 @section('content')
-    <h2>Admin oldal</h2>
+<h2>Admin oldal</h2>
 
-    <p>Üdvözöljük az adminisztrációs felületen!</p>
+<p>Üdvözöljük az adminisztrációs felületen!</p>
+<a href="{{ route('admin.filmek.getAll') }}">
+    Filmek kezelése
+</a>
 @endsection

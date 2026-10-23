@@ -6,6 +6,7 @@ use App\Http\Controllers\AdatbazisController;
 use App\Http\Controllers\KapcsolatController;
 use App\Http\Controllers\UzenetController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FilmController;
 
 Route::get('/', function () {
     return view('fooldal');
@@ -33,6 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/admin', [AdminController::class, 'adminPage'])
         ->name('admin');
+    
+    Route::get('/admin/filmek', [FilmController::class, 'getAll'])
+        ->name('admin.filmek.getAll');
 });
 
 
