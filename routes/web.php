@@ -7,6 +7,7 @@ use App\Http\Controllers\KapcsolatController;
 use App\Http\Controllers\UzenetController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\DiagramController;
 
 Route::get('/', function () {
     return view('fooldal');
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/uzenetek', [UzenetController::class, 'uzenetekLekero'])
         ->name('uzenetek');
+
+    Route::get('/diagram', [DiagramController::class, 'getAll'])
+        ->name('diagram');
 
     // Only with Admin permission
     Route::middleware('admin')->group(function () {
