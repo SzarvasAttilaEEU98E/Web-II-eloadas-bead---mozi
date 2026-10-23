@@ -4,10 +4,26 @@
 
 @section('content')
 
-<h2>Filmek összesített nézőszáma</h2>
+<h1 class="mb-4">Nézettségi statisztikák</h1>
 
-<div style="width: 90%; max-width: 1100px; height: 500px; margin: 30px auto;">
-    <canvas id="filmDiagram"></canvas>
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+        <h2 class="h4 mb-0">A 10 legnézettebb film</h2>
+    </div>
+
+    <div class="card-body">
+
+        <p class="text-body-secondary mb-4">
+            A diagram az adatbázisban szereplő előadások
+            összesített nézőszáma alapján készült.
+        </p>
+
+        <div style="position: relative; width: 100%; height: 500px;">
+            <canvas id="filmDiagram"></canvas>
+        </div>
+
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -37,15 +53,23 @@
             scales: {
                 x: {
                     beginAtZero: true,
+                    ticks: {
+                        color: '#ffffff'
+                    },
                     title: {
                         display: true,
-                        text: 'Nézőszám'
+                        text: 'Nézőszám',
+                        color: '#ffffff'
                     }
                 },
                 y: {
+                    ticks: {
+                        color: '#ffffff'
+                    },
                     title: {
                         display: true,
-                        text: 'Filmek'
+                        text: 'Filmek',
+                        color: '#ffffff'
                     }
                 }
             },
@@ -53,6 +77,7 @@
                 title: {
                     display: true,
                     text: 'A 10 legnézettebb film',
+                    color: '#ffffff',
                     font: {
                         size: 20
                     }
