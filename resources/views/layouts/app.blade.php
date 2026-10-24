@@ -6,46 +6,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>@yield('title', 'Mozi')</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <header>
-        <h1>Mozi</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
 
-        <nav>
-            <a href="{{ route('fooldal') }}">Főoldal</a>
-            <a href="{{ route('adatbazis') }}">Adatbázis</a>
-            <a href="{{ route('kapcsolat') }}">Kapcsolat</a>
-            <a href="#">Diagram</a>
+                <a class="navbar-brand" href="{{ route('fooldal') }}">
+                    Mozi
+                </a>
 
-            @guest
-                <a href="{{ route('login') }}">Bejelentkezés</a>
-                <a href="{{ route('register') }}">Regisztráció</a>
-            @endguest
+                <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu"
+                    aria-controls="navbarMenu"
+                    aria-expanded="false"
+                    aria-label="Menü megnyitása">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            @auth
-                <a href="{{ route('uzenetek') }}">Üzenetek</a>
+                <div class="collapse navbar-collapse" id="navbarMenu">
 
-                @if (auth()->user()->role == 1)
-                    <a href="{{ route('admin') }}">Admin</a>
-                @endif
+                    <ul class="navbar-nav me-auto">
 
-                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit">Kijelentkezés</button>
-                </form>
-            @endauth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('fooldal') }}">
+                                Főoldal
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('adatbazis') }}">
+                                Adatbázis
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('kapcsolat') }}">
+                                Kapcsolat
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('diagram') }}">
+                                Diagram
+                            </a>
+                        </li>
+
+                        @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('uzenetek') }}">
+                                Üzenetek
+                            </a>
+                        </li>
+
+                        @if (auth()->user()->role == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin') }}">
+                                Admin
+                            </a>
+                        </li>
+                        @endif
+                        @endauth
+
+                    </ul>
+
+                    <div class="d-flex flex-column flex-lg-row gap-2 mt-3 mt-lg-0">
+
+                        @guest
+                        <a class="btn btn-outline-light" href="{{ route('login') }}">
+                            Bejelentkezés
+                        </a>
+
+                        <a class="btn btn-primary" href="{{ route('register') }}">
+                            Regisztráció
+                        </a>
+                        @endguest
+
+                        @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <button type="submit" class="btn btn-outline-light">
+                                Kijelentkezés
+                            </button>
+                        </form>
+                        @endauth
+
+                    </div>
+
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main>
+    <main class="container py-4 flex-grow-1">
         @yield('content')
     </main>
 
-    <footer>
-        <p>Készítette: Szarvas Attila – EEU98E , NÉV NEPTUN KÓD</p>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">
+                Készítette: Szarvas Attila – EEU98E & Gaál Péter - FE6QZ4
+            </p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
