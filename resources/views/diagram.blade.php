@@ -29,8 +29,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    const filmCimek = @json($filmek - > pluck('cim'));
-    const nezoSzamok = @json($filmek - > pluck('eloadasok_sum_nezoszam'));
+    const filmCimek = @json($filmek -> pluck('cim'));
+    const nezoSzamok = @json($filmek -> pluck('eloadasok_sum_nezoszam'));
 
     const ctx = document.getElementById('filmDiagram');
 
