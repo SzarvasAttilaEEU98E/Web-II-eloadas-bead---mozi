@@ -1,8 +1,12 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="hu">
 
-@section('title', 'Adatbázis')
+<head>
+    <meta charset="UTF-8">
+    <title>Adatbázis</title>
+</head>
 
-@section('content')
+<body>
 
     <h1>Filmek</h1>
 
@@ -15,53 +19,69 @@
             </tr>
         </thead>
 
-        <tbody>
-            @foreach ($filmek as $film)
-                <tr>
-                    <td>{{ $film->cim }}</td>
-                    <td>{{ $film->ev }}</td>
-                    <td>{{ $film->hossz }} perc</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                <tbody>
+                    @foreach ($filmek as $film)
+                    <tr>
+                        <td>{{ $film->cim }}</td>
+                        <td>{{ $film->ev }}</td>
+                        <td>{{ $film->hossz }} perc</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
+<!-- MOZIK -->
+<section class="card mb-5">
+    <div class="card-header">
+        <h2 class="h4 mb-0">Mozik</h2>
+    </div>
 
-    <h1>Mozik</h1>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Név</th>
+                        <th>Város</th>
+                        <th>Férőhely</th>
+                    </tr>
+                </thead>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Név</th>
-                <th>Város</th>
-                <th>Férőhely</th>
-            </tr>
-        </thead>
+                <tbody>
+                    @foreach ($mozik as $mozi)
+                    <tr>
+                        <td>{{ $mozi->nev }}</td>
+                        <td>{{ $mozi->varos }}</td>
+                        <td>{{ $mozi->ferohely }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
-        <tbody>
-            @foreach ($mozik as $mozi)
-                <tr>
-                    <td>{{ $mozi->nev }}</td>
-                    <td>{{ $mozi->varos }}</td>
-                    <td>{{ $mozi->ferohely }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+<!-- ELŐADÁSOK -->
+<section class="card mb-5">
+    <div class="card-header">
+        <h2 class="h4 mb-0">Előadások</h2>
+    </div>
 
-
-    <h1>Előadások</h1>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Film</th>
-                <th>Mozi</th>
-                <th>Dátum</th>
-                <th>Nézőszám</th>
-                <th>Bevétel</th>
-            </tr>
-        </thead>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Film</th>
+                        <th>Mozi</th>
+                        <th>Dátum</th>
+                        <th>Nézőszám</th>
+                        <th>Bevétel</th>
+                    </tr>
+                </thead>
 
         <tbody>
             @foreach ($eloadasok as $eloadas)
@@ -75,7 +95,7 @@
             @endforeach
         </tbody>
     </table>
-
-    {{ $eloadasok->links() }}
+        {{ $eloadasok->links() }}
+</body>
 
 @endsection
