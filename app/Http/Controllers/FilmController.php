@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Film;
 use App\Http\Requests\FilmRequest;
+use App\Models\Film;
+use Illuminate\Database\QueryException;
 
 class FilmController extends Controller
 {
@@ -13,7 +13,7 @@ class FilmController extends Controller
      */
     public function getAll()
     {
-        $filmek = Film::all();
+        $filmek = Film::withCount('eloadasok')->get();
 
         return view('admin.filmek.getAll', compact('filmek'));
     }
@@ -29,11 +29,12 @@ class FilmController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FilmRequest  $request)
+    public function store(FilmRequest $request)
     {
         Film::create($request->validated());
 
-        return redirect()->route('admin.filmek.getAll')
+        return redirect()
+            ->route('admin.filmek.getAll')
             ->with('success', 'Film sikeresen hozzáadva!');
     }
 
@@ -58,13 +59,15 @@ class FilmController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(FilmRequest  $request, string $id)
+    public function update(FilmRequest $request, string $id)
     {
         $film = Film::findOrFail($id);
 
         $film->update($request->validated());
 
-        return redirect()->route('admin.filmek.getAll');
+        return redirect()
+            ->route('admin.filmek.getAll')
+            ->with('success', 'Film sikeresen módosítva!');
     }
 
     /**
@@ -74,8 +77,28 @@ class FilmController extends Controller
     {
         $film = Film::findOrFail($id);
 
-        $film->delete();
+        if ($film->eloadasok()->exists()) {
+            return redirect()
+                ->route('admin.filmek.getAll')
+                ->with(
+                    'error',
+                    'A film nem törölhető, mert előadások tartoznak hozzá!'
+                );
+        }
 
-        return redirect()->route('admin.filmek.getAll');
+        try {
+            $film->delete();
+        } catch (QueryException $exception) {
+            return redirect()
+                ->route('admin.filmek.getAll')
+                ->with(
+                    'error',
+                    'A film nem törölhető, mert kapcsolódó adatok hivatkoznak rá.'
+                );
+        }
+
+        return redirect()
+            ->route('admin.filmek.getAll')
+            ->with('success', 'Film sikeresen törölve!');
     }
 }

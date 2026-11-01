@@ -68,6 +68,31 @@
     .film-list-table .btn-warning {
         color: #1b1b1b;
     }
+
+    .film-count {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .film-count.has-screenings {
+        color: #f1b7bf;
+    }
+
+    .film-count.no-screenings {
+        color: #86d6a2;
+    }
+
+    .film-delete-disabled {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 9px;
+        border-radius: 6px;
+        background-color: #44262b;
+        color: #f1b7bf;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
 </style>
 @endpush
 
@@ -153,6 +178,11 @@
                         </th>
 
                         <th scope="col">
+                            <i class="bi bi-ticket-perforated me-2"></i>
+                            Előadások száma
+                        </th>
+
+                        <th scope="col">
                             <i class="bi bi-gear me-2"></i>Műveletek
                         </th>
                     </tr>
@@ -176,7 +206,21 @@
                             </td>
 
                             <td>
-                                <div class="d-flex flex-wrap gap-2">
+                                @if ($film->eloadasok_count > 0)
+                                    <span class="film-count has-screenings">
+                                        <i class="bi bi-ticket-perforated me-1"></i>
+                                        {{ $film->eloadasok_count }} db
+                                    </span>
+                                @else
+                                    <span class="film-count no-screenings">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        0 db
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td>
+                                <div class="d-flex flex-wrap align-items-center gap-2">
 
                                     <!-- MÓDOSÍTÁS -->
                                     <a href="{{ route('admin.filmek.edit', $film->id) }}"
@@ -186,26 +230,39 @@
                                     </a>
 
                                     <!-- TÖRLÉS -->
-                                    <form method="POST"
-                                          action="{{ route('admin.filmek.destroy', $film->id) }}">
-                                        @csrf
-                                        @method('DELETE')
+                                    @if ($film->eloadasok_count == 0)
 
-                                        <button
-                                            type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Biztosan törölni szeretnéd ezt a filmet?')">
-                                            <i class="bi bi-trash me-1"></i>
-                                            Törlés
-                                        </button>
-                                    </form>
+                                        <form method="POST"
+                                              action="{{ route('admin.filmek.destroy', $film->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Biztosan törölni szeretnéd ezt a filmet?')">
+                                                <i class="bi bi-trash me-1"></i>
+                                                Törlés
+                                            </button>
+                                        </form>
+
+                                    @else
+
+                                        <span
+                                            class="film-delete-disabled"
+                                            title="A filmhez előadások tartoznak, ezért nem törölhető.">
+                                            <i class="bi bi-lock-fill"></i>
+                                            Nem törölhető
+                                        </span>
+
+                                    @endif
 
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center py-5">
+                            <td colspan="6" class="text-center py-5">
                                 <i class="bi bi-film fs-1 d-block mb-3 text-body-secondary"></i>
                                 Jelenleg nincs film az adatbázisban.
                             </td>
